@@ -1,8 +1,16 @@
 from bs4 import BeautifulSoup
 import click
 import datetime
+import re
 
 
+def rename_file(file):
+    file_name = file.replace(".html", "").replace("Notesfrom", "")
+    split = re.findall('[A-Z][^A-Z]*', file_name)
+    
+    return "output/Notes - {0}.md".format(" ".join(split))
+    
+    
 @click.command()
 @click.option('--file', prompt='HTML note', help='The path to the Play Books-generated HTML file to be parsed.')
 def main(file):
@@ -12,7 +20,7 @@ def main(file):
         
     soup = BeautifulSoup(html, 'html.parser')
     
-    output_file_name = file.replace(".html", ".md")
+    output_file_name = rename_file(file)
     output_md = open(output_file_name, "w")
 
     book_title_h1 = soup.find("h1")
@@ -58,7 +66,7 @@ def main(file):
     
     output_md.write("\n---\nNotes last updated on {0}".format(last_synced_string))
     output_md.close()            
-    
-    
+            
+
 if __name__ == '__main__':
     main()
