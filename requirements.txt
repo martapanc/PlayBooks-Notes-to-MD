@@ -1,0 +1,7 @@
+beautifulsoup4==4.12.2
+soupsieve==2.5
+
+
+
+with open(output_filename, mode='w', newline="") as md_file:
+    
