@@ -5,7 +5,7 @@ import re
 
 
 def rename_file(file):
-    file_name = file.replace(".html", "").replace("Notesfrom", "")
+    file_name = file.replace(".html", "").replace("Notesfrom", "").replace("Noterelativeallibro", "")
     split = re.findall('[A-Z][^A-Z]*', file_name)
     
     return "output/Notes - {0}.md".format(" ".join(split))
@@ -60,7 +60,7 @@ def main(file):
             page = note_span_list[4].text.strip()
             
             output_md.write("> {0}\n".format(note_content))
-            output_md.write("[Page {0}]\n\n".format(page))
+            output_md.write("(Page {0})\n\n".format(page))
 
             # print("{0} (page {1}) - {2}".format(note_content, page, date))
     
