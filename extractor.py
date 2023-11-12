@@ -18,6 +18,9 @@ def main(file):
     with open(file, "r") as html_file:
         html = html_file.read()
         
+    html = html.replace("Data ultima sincronizzazione", "Last synced")
+    html = html.replace("Tutte le tue annotazioni", "All your annotations")
+        
     soup = BeautifulSoup(html, 'html.parser')
     
     output_file_name = rename_file(file)
@@ -43,7 +46,6 @@ def main(file):
     
     last_synced_string = soup.find("span", string=lambda text: text and "Last synced" in text).text.strip()
     last_synced_string = last_synced_string.replace('– Last synced ', '')
-    last_synced = datetime.datetime.strptime(last_synced_string, "%B %d, %Y")
         
     notes_start_h1 = soup.find('h1', string='All your annotations')
     if notes_start_h1:
